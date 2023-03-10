@@ -5,13 +5,13 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=\, initial-scale=1.0">
-  <title>Document</title>
+  <title>회원 페이지</title>
   <link rel="stylesheet" href="/css/style.css" />
   <script defer src="/js/main.js"></script>
 </head>
 
 <body>
-  <h1>Hello EJS World!</h1>
+  <a href="/">홈으로</a>
   <h1>회원 목록</h1>
   <h2>
     총 회원 수 : <%= userCounts %> 명
@@ -21,21 +21,66 @@
     <%for(let i = 0; i< userCounts; i++) { %>
     <li>
       <p>
-        ID : <%= USER_ARR[i].id %>
+        ID : <%= USER[i].id %>
       </p>
       <p>
-        NAME : <%= USER_ARR[i].name %>
+        NAME : <%= USER[i].name %>
       </p>
       <p>
-        EMAIL : <%= USER_ARR[i].email %>
+        EMAIL : <%= USER[i].email %>
       </p>
+      <a href="javascript:void(0);" onclick="deleteUser('<%= USER[i].id %>');">유저 삭제</a>
     </li>
     <% } %>
     <% } else { %>
     <li>회원 정보가 없습니다.</li>
     <% } %>
   </ul>
-  <img src="/images/puppy.jpeg" alt="강아지" />
+
+  <form action="/users/add" method="POST">
+    <div>
+      <label>아이디</label>
+      <input type="text" name="id" />
+    </div>
+    <div>
+      <label>이름</label>
+      <input type="text" name="name" />
+    </div>
+    <div>
+      <label>이메일</label>
+      <input type="text" name="email" />
+    </div>
+    <button type="submit">유저 등록</button>
+  </form>
 </body>
+<script>
+  // function deleteUser(id) {
+  //   fetch(`http://localhost:4000/users/delete/${id}`, {
+  //     method: 'delete',
+  //     headers: {
+  //       'Content-type': 'application/json',
+  //     }
+  //   }).then((res) => {
+  //     console.log(res);
+  //     location.reload();
+  //   }).catch((err) => {
+  //     console.log(err);
+  //   });
+  // }
+  // 아래와 위는 같은 의미
+
+  async function deleteUser(id) {
+    const response = await fetch(`http://localhost:4000/users/delete/${id}`, {
+      method: 'delete',
+      headers: {
+        'Content-type': 'application/json',
+      }
+    });
+
+    if (response.status === 200) return location.reload();
+
+    console.log(response);
+  }
+</script>
 
 </html>

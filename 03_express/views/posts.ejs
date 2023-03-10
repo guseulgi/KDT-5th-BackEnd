@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>게시글 목록</title>
+</head>
+<style>
+  .btn {
+    display: inline-block;
+    width: 15px;
+    height: 15px;
+    background-color: #f0f0f0;
+    border: 1px solid dodgerblue;
+  }
+
+  .btn.selected {
+    background-color: red;
+  }
+</style>
+
+<body>
+  <a href="/">홈으로</a>
+  <h1>게시글 목록</h1>
+  <p>
+    총 게시글 수는 <%= postList.length %> 개 입니다.
+  </p>
+  <form action="/posts/delete" method="delete">
+    <ul>
+      <% if(postList.length > 0) { %>
+      <% for(let i = 0; i < postList.length; i++) { %>
+      <li style="border: 1px solid #ddd;">
+        <a href="javascript:void(0);" class="btn" onclick="deleteBtn(this, postList[i].id)"></a>
+        <span>
+          <%= postList[i].id %>번 게시글 ||
+        </span>
+        <p>
+          제목 : <%= postList[i].title %>
+        </p>
+        <p>
+          내용 : <%= postList[i].content %>
+        </p>
+      </li>
+      <% } %>
+      <% } else { %>
+      <li>
+        게시글이 없습니다.
+      </li>
+      <% } %>
+    </ul>
+    <button type="submit">삭제하기</button>
+  </form>
+
+  <h3>게시글 작성</h3>
+  <form action="/posts/add" method="post">
+    <div>
+      <label>제목</label>
+      <input type="text" name="title" />
+    </div>
+    <div>
+      <label>내용</label>
+      <input type="text" name="content" />
+    </div>
+    <button type="submit">게시글 작성</button>
+  </form>
+</body>
+<script>
+  // const postBtn = document.querySelector('.btn');
+  // postBtn.addEventListener('click', (e) => {
+  //   const li = e.target.parentNode;
+  //   const span = li.children[1];
+
+  //   if (e.target.classList.contains('selected') === true) {
+  //     e.target.classList.remove('selected');
+  //   } else {
+  //     e.target.classList.add('selected');
+  //   }
+
+  //   console.log(`span.........`)
+  // });
+  function deleteBtn(obj, id) {
+    if (this.classList.contains('selected') === true) {
+      this.classList.remove('selected');
+    } else {
+      this.classList.add('selected');
+    }
+  }
+</script>
+
+</html>
