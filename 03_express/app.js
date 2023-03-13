@@ -18,11 +18,6 @@ app.use('/posts', postRouter);
 
 const PORT = 4000;
 
-// 초기 화면 (임시)
-app.get('/', (req, res) => {
-  res.send('Express World');
-});
-
 // 에러 핸들링
 app.use((err, req, res, next) => {
   console.log(err.stack);
